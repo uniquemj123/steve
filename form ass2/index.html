@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form with JavaScript Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(./images/Homepage.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+    }
+
+    form {
+      
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-left: 50px;
+    
+      
+    }
+
+    .heading{
+      font-weight: 700;
+      margin-bottom: 7px;
+      font-size: large;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 300px;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+     #eye-icon{
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      padding-bottom: 15px;
+    }
+
+    button {
+      background-color: #6DA01E;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 250px;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      border-radius: 15px;
+    }
+
+    #google{
+        display: flex;
+        text-align: center;
+        align-content: center;
+        align-items: center;
+        background-color: white;
+        border: 1px solid #6DA01E;
+        color: #6DA01E;
+        padding-left: 50px;
+
+    }
+
+    #google img{
+      width: 19px;
+      margin-left: 15px ;
+      
+    }
+
+    .error-message {
+      color: #ff0000;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .footer{
+      text-align: center;
+      font-weight: 600;
+      font-size: small;
+    }
+
+    span{
+      color:#44680e ;
+    }
+
+
+/*media query for mobile phone*/
+ @media screen and (min-width: 200px) and (max-width: 767px) {
+    body{
+        margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  form {
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    input {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      
+    }
+
+ }
+  </style>
+</head>
+<body>
+   <form id="myForm" onsubmit="validateForm(event)">
+    <div class="heading">Creat An Account</div>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <div id="nameError" class="error-message"></div>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <div id="emailError" class="error-message"></div>
+
+    <label for="phone">Phone:</label>
+    <input type="phone" id="phone" name="phone" required>
+    <div id="phoneError" class="error-message"></div>
+
+
+    <label for="password">Password:</label>
+    <div class="password-container">
+      <input type="password" id="password" name="password" required>
+      <img src="./images/eye-slash.png" id="eye-icon" onclick="togglePasswordVisibility()" alt="Toggle Password Visibility">
+    </div>
+    <div id="passwordError" class="error-message"></div>
+
+    <label for="password">Confirm Password:</label>
+    <div class="password-container">
+      <input type="con-password" id="password" name="password" required>
+      <img src="./images/eye-slash.png" id="eye-icon" onclick="togglePasswordVisibility()" alt="Toggle Password Visibility">
+    </div>
+    <div id="con-passwordError" class="error-message"></div>
+
+    
+
+    <button type="submit">Submit</button> <br>
+    <button id="google">Register with Google <img src="./images/google.png" alt=""></button>
+
+    <div class="footer">Already have an account? <span>Login</span></div>
+  </form>
+
+  <script>
+    function validateForm(event) {
+      // Reset error messages
+      document.getElementById('nameError').textContent = '';
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+      document.getElementById('messageError').textContent = '';
+
+      // Get form values
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var message = document.getElementById('message').value;
+
+      // Simple validation
+      if (!name) {
+        document.getElementById('nameError').textContent = 'Name is required';
+        event.preventDefault(); // Prevent form submission
+      }
+
+      if (!email) {
+        document.getElementById('emailError').textContent = 'Email is required';
+        event.preventDefault(); // Prevent form submission
+      }
+
+      if (!password) {
+        document.getElementById('passwordError').textContent = 'Password is required';
+        event.preventDefault(); // Prevent form submission
+      }
+
+      if (!message) {
+        document.getElementById('messageError').textContent = 'Message is required';
+        event.preventDefault(); // Prevent form submission
+      }
+    }
+
+    function togglePasswordVisibility() {
+      var passwordInput = document.getElementById('password');
+      var eyeIcon = document.getElementById('eye-icon');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.src = 'eye.png';  // Change to an eye icon
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.src = 'eye-slash.png';  // Change to an eye-slash icon
+      }
+    }
+  </script>
+
+</body>
+</html>
